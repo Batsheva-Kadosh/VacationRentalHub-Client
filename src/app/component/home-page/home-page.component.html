@@ -1,0 +1,63 @@
+
+<br><br>
+
+<div class="container-fluid">
+  <div class="row">
+    <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
+      <div class="position-sticky">
+        <h5 class="sidebar-heading">Filters</h5>
+        <div class="mb-4">
+          <h6>Price Range</h6>
+          <ng5-slider [(value)]="minValue" [(highValue)]="maxValue" [options]="options"></ng5-slider>
+          <br><br>
+          <div class="col">
+            <button class="btn btn-primary" (click)="ByPrice()">Filter</button>
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <h6>City</h6>
+          <select class="form-select" [(ngModel)]="selectedCity" (change)="ByCity()">
+            <option value="">All Cities</option>
+            <option *ngFor="let apartment of apartmentService.apartmentByCity" [value]="apartment.City">{{
+              apartment.City }}</option>
+          </select>
+        </div>
+
+        <div class="mb-4">
+          <h6>Advertiser</h6>
+          <select class="form-select" [(ngModel)]="selectedCode" (change)="ByCode()">
+            <option value="">All Advertisers</option>
+            <option *ngFor="let advertise of advertisersService.allAdvertiser" [value]="advertise.LastName">{{
+              advertise.LastName }}</option>
+          </select>
+        </div>
+
+      </div>
+    </nav>
+
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+      <h1 class="my-4">List of Apartments</h1>
+      <div *ngIf="errorMessage" class="alert alert-danger">
+        {{ errorMessage }}
+      </div>
+      <div class="row">
+        <div class="col-md-4" *ngFor="let apartment of apartmentService.arrAppartments">
+          <div class="card mb-4 shadow-sm">
+            <img src="../../../assets/pic/{{apartment.Image}}" class="card-img-top" alt="Apartment Image">
+            <div class="card-body">
+              <h5 class="card-title">{{ apartment.Name }}</h5>
+              <p class="card-text">{{ apartment.Description }}</p>
+              <p class="card-text"><strong>City:</strong> <span [innerHTML]="apartment.City | bold:selectedCity"></span></p>
+              <p class="card-text"><strong>Address:</strong> {{ apartment.Address }}</p>
+              <p class="card-text"><strong>Beds:</strong> {{ apartment.NumberOfBeds }}</p>
+              <p class="card-text"><strong>Plugins:</strong> {{ apartment.plugins }}</p>
+              <p class="card-text"><strong>Price:</strong> {{ apartment.price }}$</p>
+              <p class="card-text"><strong>Reward Code:</strong> {{ apartment.RewardCode }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
